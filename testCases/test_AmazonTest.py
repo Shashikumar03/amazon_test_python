@@ -4,7 +4,7 @@ import pytest
 
 from pages.amazon_home_page import AmazonHomePage
 from pages.amazon_search_page import AmazonSearchedPage
-
+from ddt import ddt, data, unpack
 
 @pytest.mark.usefixtures("setup")
 class TestAmazon:
@@ -21,6 +21,3 @@ class TestAmazon:
         amazonSearchedPage = AmazonSearchedPage(self.driver)
         amazonSearchedPage.validate_selected_item()
         amazonSearchedPage.validate_payment_page("checkout", "address")
-
-
-
