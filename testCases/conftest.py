@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+import logging
 
 from selenium.webdriver.chrome.service import Service
 @pytest.fixture(scope="class")
@@ -11,3 +12,10 @@ def setup(request):
     request.cls.driver = driver
     yield
     driver.quit()
+
+
+# @staticmethod(scope="class")
+@pytest.fixture()
+def LogGen():
+    logGen = logging.getLogger()
+    return logGen

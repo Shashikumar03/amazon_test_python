@@ -1,6 +1,6 @@
 from datetime import time
 from math import factorial
-
+import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -23,6 +23,8 @@ driver.find_element(By.XPATH,"//input[@id='signInSubmit']").click()
 print("successfully login")
 text= driver.find_element(By.XPATH,"//span[@id='nav-link-accountList-nav-line-1']").text
 print(text.lower().__contains__("shashi"))
+
+logging.error("successfully logged in")
 
 
 
