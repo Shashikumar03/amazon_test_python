@@ -40,22 +40,18 @@ class AddressPage:
         first_digit = fake.random_element(elements=('1', '2', '3', '4', '5', '6', '7', '8', '9'))
         remaining_digits = fake.random_number(digits=9)
         phone_number = f"{first_digit}{remaining_digits}"
-        self.driver.find_element(By.XPATH, "//input[@id='address-ui-widgets-enterAddressFullName']").send_keys(fake.name())
-        self.driver.find_element(By.XPATH, "//input[@id='address-ui-widgets-enterAddressPhoneNumber']").send_keys(
-            phone_number)
-        self.driver.find_element(By.XPATH, "//input[@id='address-ui-widgets-enterAddressPostalCode']").send_keys(
-            random.choice(list))
+        self.driver.find_element(*self.FULL_NAME_INPUT).send_keys(fake.name())
+        self.driver.find_element(*self.PHONE_NUMBER_INPUT).send_keys(phone_number)
+        self.driver.find_element(*self.POSTAL_CODE_INPUT).send_keys(random.choice(list))
 
-        self.driver.find_element(By.XPATH, "//input[@id='address-ui-widgets-enterAddressLine1']").send_keys(fake.address())
+        self.driver.find_element(*self.ADDRESS_LINE_INPUT).send_keys(fake.address())
 
-        self.driver.find_element(By.XPATH,
-                            "//input[@aria-labelledby='address-ui-widgets-form-submit-button-announce']").click()
+        self.driver.find_element(*self.SUBMIT_BUTTON).click()
         time.sleep(20)
         try:
-            review = self.driver.find_element(By.XPATH, "//h4[normalize-space()='Review your address']")
+            review = self.driver.find_element(*self.REVIEW_ADDRESS_TITLE)
             if review.is_displayed():
-                self.driver.find_element(By.XPATH,
-                                    "//input[@aria-labelledby='address-ui-widgets-form-submit-button-announce']").click()
+                self.driver.find_element(*self.SUBMIT_BUTTON).click()
 
         except NoSuchElementException:
             print("exception")
