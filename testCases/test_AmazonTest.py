@@ -21,6 +21,7 @@ class TestAmazon:
         ("7878882521122155", "password2", "phone number should be of 10 digit"),
         ("9110164878", "password3", "user is not register"),
         ("91101648xxx", "password3", "only numeric integer is allowed"),
+
     ])
     @pytest.mark.xfail
     def test_login_with_invalid_phone_number(self, username, password, expected):
@@ -50,14 +51,17 @@ class TestAmazon:
         amazonHomePage = AmazonHomePage(self.driver)
         amazonHomePage.login_with_valid_username_but_invalid_password(username, password, expected)
 
-    #
+    def test_login_with_valid_username_but_empty_password(self):
+        amazonHomePage = AmazonHomePage(self.driver)
+        amazonHomePage.login_with_valid_username_but_empty_password("9110164834","","please enter valid password")
+
     @pytest.mark.xfail
     def test_login_with_valid_credentials(self):
         amazonHomePage = AmazonHomePage(self.driver)
         amazonHomePage.login_with_valid_credentials("9110164834", "Shashi@123", "shashi")
         amazonHomePage.validate_search_item("realme gt neo 3 256GB", "realme")
         time.sleep(10)
-
+    #
     @pytest.mark.parametrize("fullname, mobileNumber,pincode,flate_house,area, expected", [
         ("", "", "", "", "", "please fill the inputs"),
         (" ", "7073052300", "845305", "near bypass", "singhpu haraiya", "give enter ur name"),

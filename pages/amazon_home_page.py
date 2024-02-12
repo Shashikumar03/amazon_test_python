@@ -5,6 +5,8 @@ import pytest
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from error_message.error import ErrorMessage
 
@@ -22,6 +24,7 @@ class AmazonHomePage:
 
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 20)
 
     def amazon_current_url(self, title, currentUrl):
         self.driver.get("https://www.amazon.in/")
@@ -30,7 +33,8 @@ class AmazonHomePage:
 
     def login_with_invalid_phone_number(self, username, expected):
         url = self.driver.current_url
-        self.driver.find_element(*self.NAVIGATION_MENU).click()
+        self.wait.until(EC.element_to_be_clickable(self.NAVIGATION_MENU)).click()
+        # self.driver.find_element(*self.NAVIGATION_MENU).click()
         self.driver.find_element(*self.EMAIL_INPUT).clear()
         self.driver.find_element(*self.EMAIL_INPUT).send_keys(username)
         self.driver.find_element(*self.CONTINUE_BUTTON).click()
@@ -46,7 +50,7 @@ class AmazonHomePage:
 
     def login_with_empty_input(self, username):
         url = self.driver.current_url
-        self.driver.find_element(*self.NAVIGATION_MENU).click()
+        self.wait.until(EC.element_to_be_clickable(self.NAVIGATION_MENU)).click()
         self.driver.find_element(*self.EMAIL_INPUT).clear()
         self.driver.find_element(*self.EMAIL_INPUT).send_keys(username)
         self.driver.find_element(*self.CONTINUE_BUTTON).click()
@@ -58,7 +62,7 @@ class AmazonHomePage:
 
     def login_with_invalid_email(self, email, expected):
         url = self.driver.current_url
-        self.driver.find_element(*self.NAVIGATION_MENU).click()
+        self.wait.until(EC.element_to_be_clickable(self.NAVIGATION_MENU)).click()
         self.driver.find_element(*self.EMAIL_INPUT).clear()
         self.driver.find_element(*self.EMAIL_INPUT).send_keys(email)
         self.driver.find_element(*self.CONTINUE_BUTTON).click()
@@ -89,6 +93,25 @@ class AmazonHomePage:
             self.driver.find_element(*self.SIGN_IN_BUTTON).click()
             incorrect_password_text = self.driver.find_element(By.XPATH, "//span[@class='a-list-item']").text.lower()
             assert incorrect_password_text == ErrorMessage.your_password_is_incorrect.lower()
+        except NoSuchElementException as e:
+            print("error")
+            pass
+
+        time.sleep(3)
+        self.driver.get(url)
+
+    def login_with_valid_username_but_empty_password(self, username, password,expected):
+        url = self.driver.current_url
+        try:
+            self.driver.find_element(*self.NAVIGATION_MENU).click()
+            self.driver.find_element(*self.EMAIL_INPUT).clear()
+            self.driver.find_element(*self.EMAIL_INPUT).send_keys(username)
+            self.driver.find_element(*self.CONTINUE_BUTTON).click()
+            self.driver.find_element(*self.PASSWORD_INPUT).send_keys(password)
+            self.driver.find_element(*self.SIGN_IN_BUTTON).click()
+            error_message = self.driver.find_element(By.XPATH, "//div[contains(text(),'Enter your password')]").text
+            assert error_message.lower() ==ErrorMessage.enter_your_password.lower();
+
         except NoSuchElementException as e:
             print("error")
             pass

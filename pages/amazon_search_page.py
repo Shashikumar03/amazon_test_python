@@ -3,11 +3,13 @@ import time
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class AmazonSearchedPage:
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 20)
 
     def validate_selected_item(self):
         print(self.driver.current_url)

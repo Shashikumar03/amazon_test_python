@@ -14,6 +14,9 @@ from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+
+
 class AddressPage:
     NAV_GLOBAL_LOCATION_POPOVER_LINK = (By.XPATH, '//a[@id=\'nav-global-location-popover-link\']')
     ADD_ADDRESS_OR_PICK_UP_POINT = (By.XPATH, "//a[normalize-space()='Add an address or pick-up point']")
@@ -27,6 +30,7 @@ class AddressPage:
 
     def __init__(self,driver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 20)
 
     def add_new_address_with_invalid_credentials(self,fullname, mobileNumber, pincode, flate_house,area,expected):
         url=self.driver.current_url
