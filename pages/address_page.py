@@ -1,5 +1,7 @@
 import time
 
+import allure
+from allure_commons.types import AttachmentType
 from faker import Faker
 from selenium.webdriver.common.by import By
 
@@ -16,6 +18,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
+from error_message.error import ErrorMessage
+
 
 class AddressPage:
     NAV_GLOBAL_LOCATION_POPOVER_LINK = (By.XPATH, '//a[@id=\'nav-global-location-popover-link\']')
@@ -27,6 +31,7 @@ class AddressPage:
     ADDRESS_LINE_INPUT = (By.ID, 'address-ui-widgets-enterAddressLine1')
     SUBMIT_BUTTON = (By.XPATH, "//input[@aria-labelledby='address-ui-widgets-form-submit-button-announce']")
     REVIEW_ADDRESS_TITLE = (By.XPATH, "//h4[normalize-space()='Review your address']")
+
 
     def __init__(self,driver):
         self.driver = driver
@@ -50,7 +55,12 @@ class AddressPage:
         self.driver.find_element(By.XPATH,"//input[@id='address-ui-widgets-landmark']").send_keys(flate_house)
 
         self.driver.find_element(*self.SUBMIT_BUTTON).click()
-        time.sleep(10)
+        time.sleep(2)
+        try:
+            review = self.driver.find_element(*self.REVIEW_ADDRESS_TITLE).text.lower()
+            assert  review == ErrorMessage.review_your_address.lower()
+        except NoSuchElementException:
+            allure.attach(self.driver.get_screenshot_as_png(), name='failed_test', attachment_type=AttachmentType.PNG)
 
         print(expected)
         self.driver.get(url)
@@ -82,4 +92,5 @@ class AddressPage:
                 self.driver.find_element(*self.SUBMIT_BUTTON).click()
 
         except NoSuchElementException:
+            allure.attach(self.driver.get_screenshot_as_png(), name='failed_test', attachment_type=AttachmentType.PNG)
             print("exception")

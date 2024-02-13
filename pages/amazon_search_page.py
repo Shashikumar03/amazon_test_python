@@ -1,5 +1,7 @@
 import time
 
+import allure
+from allure_commons.types import AttachmentType
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
@@ -11,6 +13,10 @@ class AmazonSearchedPage:
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 20)
 
+    def amazon_current_url(self, title, currentUrl):
+        self.driver.get("https://www.amazon.in/")
+
+
     def validate_selected_item(self):
         print(self.driver.current_url)
         try:
@@ -20,10 +26,11 @@ class AmazonSearchedPage:
                 dd.select_by_value("2")
         except NoSuchElementException as e:
             print("An exception occurred")
+            allure.attach(self.driver.get_screenshot_as_png(), name='failed_test', attachment_type=AttachmentType.PNG)
 
         # print(dropDown.is_displayed())
 
-        time.sleep(2)
+        time.sleep(5)
         self.driver.find_element(By.XPATH, "//input[@id='buy-now-button']").click()
         time.sleep(5)
 
