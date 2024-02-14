@@ -8,3 +8,4 @@ class ErrorMessage:
     your_password_is_incorrect = "Your password is incorrect"
     enter_your_password = "Enter your password"
     review_your_address = "Review your address"
+    invalid_coupon="Invalid coupon"

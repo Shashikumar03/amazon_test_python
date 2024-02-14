@@ -67,12 +67,14 @@ class AmazonHomePage:
 
         # print(ErrorMessage.please_enter_phone_or_email)
 
-        self.driver.get(url)
+
 
         try:
             assert empty_input.lower() == ErrorMessage.please_enter_phone_or_email.lower()
         except AssertionError as e:
              allure.attach(self.driver.get_screenshot_as_png(), name='failed_test', attachment_type=AttachmentType.PNG)
+             self.driver.get(url)
+             assert False
 
 
 

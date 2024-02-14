@@ -17,13 +17,13 @@ class TestAmazon:
         amazonHomePage = AmazonHomePage(self.driver)
         amazonHomePage.amazon_current_url(Message.title)
 
-
-
+    @pytest.mark.smoke
     @pytest.mark.parametrize("username, password, expected",get_data())
     def test_readExcelFile(self, username,password,expected):
         amazonHomePage = AmazonHomePage(self.driver)
         amazonHomePage.login_with_invalid_phone_number(username, expected)
 
+    @pytest.mark.smoke
     @pytest.mark.parametrize("username, password, expected", [
         ("978784", "password1", "phone number should be of 10 digit"),
         ("7878882521122155", "password2", "phone number should be of 10 digit"),
@@ -37,6 +37,7 @@ class TestAmazon:
         amazonHomePage.login_with_invalid_phone_number(username, expected)
 
 
+    @pytest.mark.sanity
     def test_login_with_empty_input(self):
 
         amazonHomePage = AmazonHomePage(self.driver)
@@ -49,6 +50,7 @@ class TestAmazon:
         ("shahsi123@gmail.com", "password3", "un register user"),
         ("91101648awshotmail", "password3", "invalid email"),
     ])
+
     def test_login_with_invalid_email(self, email, password, expected):
         amazonHomePage = AmazonHomePage(self.driver)
         amazonHomePage.login_with_invalid_email(email, expected)

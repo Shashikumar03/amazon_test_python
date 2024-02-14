@@ -86,11 +86,15 @@ class AddressPage:
 
         self.driver.find_element(*self.SUBMIT_BUTTON).click()
         time.sleep(20)
+        text=None
         try:
             review = self.driver.find_element(*self.REVIEW_ADDRESS_TITLE)
             if review.is_displayed():
                 self.driver.find_element(*self.SUBMIT_BUTTON).click()
+                text = self.driver.find_element(By.XPATH, "//h4[normalize-space()='Address saved']").text.lower()
 
         except NoSuchElementException:
             allure.attach(self.driver.get_screenshot_as_png(), name='failed_test', attachment_type=AttachmentType.PNG)
             print("exception")
+
+        assert text == "address saved"
