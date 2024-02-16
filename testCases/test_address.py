@@ -10,7 +10,6 @@ from pages.amazon_home_page import AmazonHomePage
 class TestAddress:
     def test_address_setup(self):
         amazonHomePage = AmazonHomePage(self.driver)
-
         amazonHomePage.amazon_current_url(Message.title)
         amazonHomePage.login_with_valid_credentials("9110164834","Shashi@123","shashi")
 

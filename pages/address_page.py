@@ -41,16 +41,17 @@ class AddressPage:
         url=self.driver.current_url
         print(url)
         self.driver.find_element(*self.NAV_GLOBAL_LOCATION_POPOVER_LINK).click()
-        time.sleep(5)
+        time.sleep(1)
         self.driver.find_element(*self.ADD_ADDRESS_OR_PICK_UP_POINT).click()
-        time.sleep(2)
+        time.sleep(1)
         self.driver.find_element(*self.ADDRESS_TILE).click()
-        time.sleep(5)
+        time.sleep(1)
 
         self.driver.find_element(*self.FULL_NAME_INPUT).send_keys(fullname)
         self.driver.find_element(*self.PHONE_NUMBER_INPUT).send_keys(mobileNumber)
+        time.sleep(1)
         self.driver.find_element(*self.POSTAL_CODE_INPUT).send_keys(pincode)
-
+        time.sleep(1)
         self.driver.find_element(*self.ADDRESS_LINE_INPUT).send_keys(area)
         self.driver.find_element(By.XPATH,"//input[@id='address-ui-widgets-landmark']").send_keys(flate_house)
 

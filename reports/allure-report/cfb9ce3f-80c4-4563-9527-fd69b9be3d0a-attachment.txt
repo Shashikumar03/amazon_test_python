@@ -1,0 +1,2 @@
+[33mWARNING [0m root:amazon_home_page.py:78 please enter username
+[1m[31mERROR   [0m root:amazon_home_page.py:79 error message:

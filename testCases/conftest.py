@@ -7,6 +7,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 from selenium.webdriver.chrome.service import Service as ChromeService, Service
 from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
 
@@ -16,12 +17,12 @@ def setup(request):
     browser_option = request.config.getoption("--browser")
 
     if browser_option == "chrome":
-        service = Service(executable_path='/home/shashi/PycharmProjects/pythonSelenium/resource/chromedriver')
+        service = Service(executable_path=ChromeDriverManager().install())
         options = webdriver.ChromeOptions()
         driver = webdriver.Chrome(service=service, options=options)
     elif browser_option == "firefox":
 
-        service = Service(executable_path='/home/shashi/PycharmProjects/pythonSelenium/resource/geckodriver.exe')
+        service = Service(executable_path=GeckoDriverManager().install())
         options = webdriver.FirefoxOptions()
         driver = webdriver.Firefox(service=service, options=options)
     else:

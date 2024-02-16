@@ -4,6 +4,7 @@ import time
 
 import allure
 import pytest
+import softest
 from allure_commons.types import AttachmentType
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
@@ -74,7 +75,12 @@ class AmazonHomePage:
         except AssertionError as e:
              allure.attach(self.driver.get_screenshot_as_png(), name='failed_test', attachment_type=AttachmentType.PNG)
              self.driver.get(url)
+             logging.warning("please enter username")
+             logging.error("error message:")
              assert False
+
+        # assert empty_input.lower() == ErrorMessage.please_enter_phone_or_email.lower()
+
 
 
 
